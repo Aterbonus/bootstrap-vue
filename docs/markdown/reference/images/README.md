@@ -4,15 +4,15 @@
 on `<img>` tags, but doesn't automatically for Bootrap-Vue custom
 components that accept image src url tags.
 
-## Vue-loader `transformToRequire` to resolve img paths
+## Vue-loader `transformAssetUrls` to resolve img paths
 To have your project convert these custom component image URLs for you, you will need to
-customize the [`transformToRequire`](https://vue-loader.vuejs.org/en/options.html#transformtorequire)
-`option` for `vue-loader` in your webpack config.
+customize the [`transformAssetUrls`](https://vue-loader.vuejs.org/options.html#transformasseturls)
+`option` (Or `transformToRequire` if you are using `vue-loader` below v15) for `vue-loader` in your webpack config.
 
-The default value for `transformToRequire` is:
+The default value for `transformAssetUrls` is:
 
 ```js
-transformToRequire: {
+transformAssetUrls: {
   'img': 'src',
   'image': 'xlink:href'
 }
@@ -22,7 +22,7 @@ To allow Bootstrap-Vue components to use project relative URLs,
 use the following configuration:
 
 ```js
-transformToRequire: {
+transformAssetUrls: {
   'img': 'src',
   'image': 'xlink:href',
   'b-img': 'src',
@@ -42,7 +42,7 @@ This will allow you to use the following format in your `.vue` files:
 <b-card-img img-src="~/static/picture.jpg" />
 ```
 
-### Configuring `transformToRequire` in Nuxt
+### Configuring `transformAssetUrls` in Nuxt
 
 In your `nuxt.config.js` file, add the following to your build section:
 
@@ -50,7 +50,7 @@ In your `nuxt.config.js` file, add the following to your build section:
 build: {   
   extend (config, ctx) {
     const vueLoader = config.module.rules.find((rule) => rule.loader === 'vue-loader')
-    vueLoader.options.transformToRequire = {
+    vueLoader.options.transformAssetUrls = {
       'img': 'src',
       'image': 'xlink:href',
       'b-img': 'src',
